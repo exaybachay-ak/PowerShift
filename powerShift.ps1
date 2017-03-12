@@ -4,6 +4,9 @@ param (
     [switch]$unshift = $false
 )
 
+#----> Start a timer to report how long execution takes
+$stopwatch = [system.diagnostics.stopwatch]::startNew()
+
 ####----> Modifying script for Windows default PATH functionality
 $testpath = test-path "/bin/"
 
@@ -94,6 +97,11 @@ else{
 	}
 
 	$unshiftarr = $unshiftarrlist.ToArray()
-	write-host $unshiftarr
 	[IO.File]::WriteAllBytes($outfile, $unshiftarr)
 }
+
+$stopwatch.stop()
+[int]$exectime = $stopwatch.elapsed.totalseconds
+
+write-host " "
+write-host "Script execution took $exectime seconds."
