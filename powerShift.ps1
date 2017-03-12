@@ -41,7 +41,6 @@ if(!$unshift){
 
 	<#
 	possible formats to use:
-
 		#### MS OFFICE XML (docx, xlsx, pptx, etc...)
 		# MS Office XML hex signature is 50 4B 03 04 14 00 06 00, which is 80 75 3 4 20 0 6 0 in bytes
 		[byte[]] $header = 0x80,0x7,0x03,0x04,0x20,0x00,0x06,0x00
@@ -50,14 +49,12 @@ if(!$unshift){
 		Actual footer from MS XLSX file for reference
 		80 75 5 6 0 0 0 0 15 0 15 0 238 3 0 0 243 76 0 0 0 0
 
-
 		# PDF hex Signature is 25 50 44 46, which is 19 32 2c 2e in bytes
 		[byte[]] $header = 0x37,0x80,0x68,0x70
 		[byte[]] $footer = 0x10,0x37,0x37,0x69,0x79,0x70
 
 		Actual footer from PDF file for reference
 		10 37 37 69 79 70
-
 	#>
 
 	foreach($b in $header){
@@ -75,17 +72,12 @@ if(!$unshift){
 	}
 
 	$shiftarr = $shiftarrlist.ToArray()
-
 	New-Item $outfile -type file | out-null
-
 	[IO.File]::WriteAllBytes($outfile, $shiftarr)
 }
 
 
 else{
-	write-host $InFile
-	write-host $OutFile
-
 	####----> read in data for retrieving shifted data bits
 	$filereadStream = [System.IO.File]::Open($infile, [System.IO.FileMode]::Open, [System.IO.FileAccess]::Read, [System.IO.FileShare]::ReadWrite)
 	$reader = New-Object System.IO.BinaryReader($filereadStream)
@@ -102,8 +94,6 @@ else{
 	}
 
 	$unshiftarr = $unshiftarrlist.ToArray()
-
 	write-host $unshiftarr
-
 	[IO.File]::WriteAllBytes($outfile, $unshiftarr)
 }
